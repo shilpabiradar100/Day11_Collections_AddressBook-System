@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBooking_Main {
-
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -27,7 +26,8 @@ public class AddressBooking_Main {
                     "\n-->>Press 5 To Search Contacts By City<<--" +
                     "\n-->>Press 6 To See The Person Count According To City<<--" +
                     "\n-->>Press 7 To Sort AddressBook Using Name<<--" +
-                    "\n-->>Press 8 To Close The Program<<--");
+                    "\n-->>Press 8 To Sort By Choice<<--" +
+                    "\n-->>Press 9 To Close The Program<<--");
             System.out.println("----------------------------------------------------------");
             System.out.print("YOUR INPUT --->> ");
             in = sc.nextInt();
@@ -81,7 +81,7 @@ public class AddressBooking_Main {
 
                 }
 
-                case 8: {
+                case 9: {
 
                     System.out.println("--->Application Closing || Thank You For Using Address Book Service<---");
                     break;
@@ -137,13 +137,19 @@ public class AddressBooking_Main {
                     contact.sortByName(userInput);
                     break;
                 }
+                case 8:{
+                    System.out.print("Enter The AddressBook Name : ");
+                    String userInput = sc.next();
+                    contact.sortByChoice(userInput);
+                    break;
+                }
 
                 default:
                     System.out.println("Please Enter The Correct Choice");
                     break;
             }
 
-        } while (in != 8);
+        } while (in != 9);
 
     }
 }
@@ -332,6 +338,34 @@ class AddressBookFeatures {
         ArrayList<ContactStoring> temp = multipleAddressBook.get(addressBookName);
         List list = temp.stream().sorted((f,s)-> f.getFirstName().compareTo(s.getFirstName())).collect(Collectors.toList());
         System.out.println(list);
+
+    }
+
+    public void sortByChoice(String addressBookName){
+
+        ArrayList<ContactStoring> temp = multipleAddressBook.get(addressBookName);
+        System.out.println("Press 1 to Sort By City\nPress 2 to Sort By State\nPress 3 to Sort By ZIP");
+        System.out.print("Your Choice : ");
+        int input = sc.nextInt();
+
+        switch (input){
+            case 1:{
+                List cityList = temp.stream().sorted((f,s)-> f.getCity().compareTo(s.getCity())).collect(Collectors.toList());
+                System.out.println(cityList);
+                break;
+            }
+            case 2:{
+                List cityList = temp.stream().sorted((f,s)-> f.getState().compareTo(s.getState())).collect(Collectors.toList());
+                System.out.println(cityList);
+                break;
+            }
+            case 3:{
+                List cityList = temp.stream().sorted((f,s)-> Long.valueOf(f.getZip()).compareTo(Long.valueOf(s.getZip()))).collect(Collectors.toList());
+                System.out.println(cityList);
+                break;
+            }
+
+        }
 
     }
 
