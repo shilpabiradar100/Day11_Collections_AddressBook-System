@@ -1,9 +1,10 @@
 
-
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBooking_Main {
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -27,7 +28,9 @@ public class AddressBooking_Main {
                     "\n-->>Press 6 To See The Person Count According To City<<--" +
                     "\n-->>Press 7 To Sort AddressBook Using Name<<--" +
                     "\n-->>Press 8 To Sort By Choice<<--" +
-                    "\n-->>Press 9 To Close The Program<<--");
+                    "\n-->>Press 9 To Write To File<<--" +
+                    "\n-->>Press 10 To Read From File<<--" +
+                    "\n-->>Press 11 To Close The Program<<--");
             System.out.println("----------------------------------------------------------");
             System.out.print("YOUR INPUT --->> ");
             in = sc.nextInt();
@@ -81,7 +84,7 @@ public class AddressBooking_Main {
 
                 }
 
-                case 9: {
+                case 11: {
 
                     System.out.println("--->Application Closing || Thank You For Using Address Book Service<---");
                     break;
@@ -144,12 +147,26 @@ public class AddressBooking_Main {
                     break;
                 }
 
+                case 9:{
+
+                    contact.writeDataToFile();
+                    break;
+
+                }
+
+                case 10:{
+
+                    contact.readFromFile();
+                    break;
+
+                }
+
                 default:
                     System.out.println("Please Enter The Correct Choice");
                     break;
             }
 
-        } while (in != 9);
+        } while (in != 11);
 
     }
 }
@@ -368,6 +385,59 @@ class AddressBookFeatures {
         }
 
     }
+
+    public void writeDataToFile(){
+
+        BufferedWriter bufferedWriter= null;
+        try{
+            bufferedWriter = new BufferedWriter(new FileWriter("C:\\Users\\asaha\\Desktop\\Java_Fellowship_242\\AddressBookSystem_ALL\\src\\OutputAddresses.txt"));
+            for (Map.Entry<String,ArrayList> entry : multipleAddressBook.entrySet()){
+                bufferedWriter.write(entry.getKey()+ " : " + entry.getValue());
+                bufferedWriter.newLine();
+            }
+            System.out.println("---File Added Successfully---");
+            bufferedWriter.flush();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        finally {
+            try{
+                bufferedWriter.close();
+            }
+            catch (Exception e){
+
+            }
+        }
+    }
+
+    public void readFromFile(){
+
+        BufferedReader bufferedReader = null;
+
+        try{
+            bufferedReader = new BufferedReader(new FileReader("C:\\Users\\asaha\\Desktop\\Java_Fellowship_242\\AddressBookSystem_ALL\\src\\OutputAddresses.txt"));
+            String line;
+            while((line = bufferedReader.readLine()) != null){
+                System.out.println(line);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (Exception e) {
+
+                }
+            }
+        }
+
+    }
+
+
 
     public void displayContacts() {
 
