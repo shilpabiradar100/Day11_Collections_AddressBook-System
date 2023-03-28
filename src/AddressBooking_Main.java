@@ -8,7 +8,6 @@ public class AddressBooking_Main {
         Scanner sc = new Scanner(System.in);
 
 
-
         System.out.println("---Welcome To The Address Book Storing System---");
         AddressBookFeatures contact = new AddressBookFeatures();
 
@@ -34,7 +33,6 @@ public class AddressBooking_Main {
                 }
 
 
-
                 case 1: {
 
                     System.out.print("Enter The Address Book Name: ");
@@ -42,7 +40,7 @@ public class AddressBooking_Main {
 
                     System.out.print("Enter Your PhoneNumber For Confirmation: ");
                     long phoneNumber = sc.nextLong();
-                    boolean updated = contact.editContact(phoneNumber,userInput);
+                    boolean updated = contact.editContact(phoneNumber, userInput);
 
                     if (updated) {
                         System.out.println("---Contact Updated---");
@@ -52,14 +50,14 @@ public class AddressBooking_Main {
                     break;
                 }
 
-                case 2:{
+                case 2: {
 
                     System.out.print("Enter The Address Book Name: ");
                     String userInput = sc.next();
 
                     System.out.print("Enter Your PhoneNumber For Confirmation : ");
                     long phoneNumber = sc.nextLong();
-                    boolean updated = contact.deleteByNumber(phoneNumber,userInput);
+                    boolean updated = contact.deleteByNumber(phoneNumber, userInput);
                     if (updated) {
                         System.out.println("---Contact Deleted---");
                     } else {
@@ -68,28 +66,27 @@ public class AddressBooking_Main {
                     break;
                 }
 
-                case 4:{
+                case 4: {
 
                     contact.displayContacts();
                     break;
 
                 }
 
-                case 5:{
+                case 5: {
 
                     System.out.println("--->Application Closing || Thank You For Using Address Book Service<---");
                     break;
                 }
 
-                case 3:{
+                case 3: {
 
                     System.out.print("Enter The Address Book Name: ");
                     String userInput = sc.next();
                     boolean updated = contact.deleteAddressBook(userInput);
-                    if (updated){
+                    if (updated) {
                         System.out.println("---Address Book Deleted---");
-                    }
-                    else{
+                    } else {
                         System.out.println("---Address Book Not Found---");
                     }
                     break;
@@ -102,7 +99,7 @@ public class AddressBooking_Main {
                     break;
             }
 
-        } while(in != 5);
+        } while (in != 5);
 
     }
 }
@@ -127,61 +124,64 @@ class AddressBookFeatures {
         System.out.print("Enter AddressBook Name : ");
         String input2 = sc.next();
 
-        if(multipleAddressBook.containsKey(input2)){
+        if (multipleAddressBook.containsKey(input2)) {
             System.out.println("-----Address Book Already Exists-----");
-        }
-        else{
+        } else {
 
             System.out.print("How Many Contacts You Want To Store? -->> ");
             int userInput = sc.nextInt();
-            for(int i =0 ; i < userInput; i++) {
+            for (int i = 0; i < userInput; i++) {
 
                 System.out.print("Enter First Name : ");
                 String firstName = sc.next();
 
+                boolean update = temp.stream().anyMatch(x -> x.getFirstName().equalsIgnoreCase(firstName));
+                if (update) {
+                    System.out.println("Already Exists");
+                } else {
 
-                System.out.print("Enter The Last Name : ");
-                String lastName = sc.next();
+                    System.out.print("Enter The Last Name : ");
+                    String lastName = sc.next();
 
-                System.out.print("Enter Your City : ");
-                String city = sc.next();
+                    System.out.print("Enter Your City : ");
+                    String city = sc.next();
 
-                System.out.print("Enter Your State : ");
-                String state = sc.next();
+                    System.out.print("Enter Your State : ");
+                    String state = sc.next();
 
-                System.out.print("Enter Pin Number : ");
-                int zip = sc.nextInt();
+                    System.out.print("Enter Pin Number : ");
+                    int zip = sc.nextInt();
 
-                System.out.print("Enter Your Phone Number : ");
-                long phoneNumber = sc.nextLong();
+                    System.out.print("Enter Your Phone Number : ");
+                    long phoneNumber = sc.nextLong();
 
-                System.out.print("Enter Your Email Address : ");
-                String email = sc.next();
+                    System.out.print("Enter Your Email Address : ");
+                    String email = sc.next();
 
 
-                contact = new ContactStoring(firstName, lastName, city, state, zip, phoneNumber, email);
+                    contact = new ContactStoring(firstName, lastName, city, state, zip, phoneNumber, email);
 
-                info.add(contact);
+                    info.add(contact);
 
-                temp.add(contact);
+                    temp.add(contact);
+                }
 
             }
 
         }
 
-        multipleAddressBook.put(input2,temp);
+        multipleAddressBook.put(input2, temp);
 
     }
 
 
-
     public boolean editContact(long phoneNumber, String addressBookName) {
 
-        try{
+        try {
             ArrayList<ContactStoring> temp = multipleAddressBook.get(addressBookName);
 
             for (int i = 0; i < temp.size(); i++) {
-                if (temp.get(i) != null && temp.get(i).getPhoneNumber() == phoneNumber ) {
+                if (temp.get(i) != null && temp.get(i).getPhoneNumber() == phoneNumber) {
 
                     System.out.print("Enter First Name : ");
                     String firstName = sc.next();
@@ -214,8 +214,7 @@ class AddressBookFeatures {
 
             }
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
             System.out.println("---Address Book Not Found---");
 
@@ -232,13 +231,13 @@ class AddressBookFeatures {
             ArrayList<ContactStoring> temp = multipleAddressBook.get(addressBookName);
 
             for (int i = 0; i < temp.size(); i++) {
-                if (temp.get(i) != null && temp.get(i).getPhoneNumber() == phoneNumber ) {
+                if (temp.get(i) != null && temp.get(i).getPhoneNumber() == phoneNumber) {
                     temp.remove(i);
                     return true;
                 }
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
             System.out.println("---Address Book Not Found---");
         }
@@ -247,18 +246,16 @@ class AddressBookFeatures {
         return false;
     }
 
-    public boolean deleteAddressBook(String addressBookKey){
+    public boolean deleteAddressBook(String addressBookKey) {
 
         ArrayList temp = multipleAddressBook.remove(addressBookKey);
-        if (temp == null){
+        if (temp == null) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
 
     }
-
 
 
     public void displayContacts() {
@@ -270,8 +267,7 @@ class AddressBookFeatures {
 }
 
 
-
-class ContactStoring{
+class ContactStoring {
     private String firstName;
     private String lastName;
     private String address;
@@ -282,7 +278,7 @@ class ContactStoring{
     private String email;
 
 
-    public ContactStoring(String firstName, String lastName,  String city, String state, int zip, long phoneNumber, String email) {
+    public ContactStoring(String firstName, String lastName, String city, String state, int zip, long phoneNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.city = city;
@@ -331,7 +327,6 @@ class ContactStoring{
     public String getLastName() {
         return lastName;
     }
-
 
 
     public String getCity() {
