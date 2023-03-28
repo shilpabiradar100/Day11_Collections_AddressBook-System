@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBooking_Main {
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -25,7 +26,8 @@ public class AddressBooking_Main {
                     "\n-->>Press 4 To Display The Address Books<<--" +
                     "\n-->>Press 5 To Search Contacts By City<<--" +
                     "\n-->>Press 6 To See The Person Count According To City<<--" +
-                    "\n-->>Press 7 To Close The Program<<--");
+                    "\n-->>Press 7 To Sort AddressBook Using Name<<--" +
+                    "\n-->>Press 8 To Close The Program<<--");
             System.out.println("----------------------------------------------------------");
             System.out.print("YOUR INPUT --->> ");
             in = sc.nextInt();
@@ -79,7 +81,7 @@ public class AddressBooking_Main {
 
                 }
 
-                case 7: {
+                case 8: {
 
                     System.out.println("--->Application Closing || Thank You For Using Address Book Service<---");
                     break;
@@ -129,12 +131,19 @@ public class AddressBooking_Main {
 
                 }
 
+                case 7: {
+                    System.out.print("Enter AddressBook Name : ");
+                    String userInput = sc.next();
+                    contact.sortByName(userInput);
+                    break;
+                }
+
                 default:
                     System.out.println("Please Enter The Correct Choice");
                     break;
             }
 
-        } while (in != 7);
+        } while (in != 8);
 
     }
 }
@@ -316,6 +325,14 @@ class AddressBookFeatures {
             System.out.println("---AddressBook Not Found---");
         }
         return false;
+    }
+
+    public void sortByName(String addressBookName){
+
+        ArrayList<ContactStoring> temp = multipleAddressBook.get(addressBookName);
+        List list = temp.stream().sorted((f,s)-> f.getFirstName().compareTo(s.getFirstName())).collect(Collectors.toList());
+        System.out.println(list);
+
     }
 
     public void displayContacts() {
