@@ -1,11 +1,58 @@
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Scanner;
+import java.util.SortedMap;
 public class AddressBooking_Main {
     public static void main(String[] args) {
 
         System.out.println("---Welcome To The Address Book Storing System---");
-        ContactStoring contact = new ContactStoring("Shilpa","Biradar","Mahesh Colony","Serampore", "West Bengal",712202,89890034,"shilpabiradar100@gmail.com");
-        System.out.println(contact);
+        AddressBookFeatures contact = new AddressBookFeatures();
+        contact.addNew();
+        contact.displayContacts();
     }
 
+}
+
+class AddressBookFeatures{
+    ContactStoring contact;
+    public void addNew(){
+
+        Scanner sc = new Scanner(System.in);
+        Scanner gh = new Scanner(System.in);
+
+        System.out.println("Enter First Name");
+        String firstName = sc.nextLine();
+
+        System.out.println("Enter The Last Name");
+        String lastName = sc.nextLine();
+
+        System.out.println("Enter Your Address");
+        String address = sc.nextLine();
+
+        System.out.println("Enter Your City");
+        String city = sc.nextLine();
+
+        System.out.println("Enter Your State");
+        String state = sc.nextLine();
+
+        System.out.println("Enter Pin Number");
+        int zip = sc.nextInt();
+
+        System.out.println("Enter Your Phone Number");
+        long phoneNumber = sc.nextLong();
+
+        System.out.println("Enter Your Email Address");
+        String email = gh.nextLine();
+
+        contact = new ContactStoring(firstName,lastName,address,city,state,zip,phoneNumber,email);
+    }
+
+    public void displayContacts(){
+
+        System.out.println(contact);
+
+    }
 }
 
 class ContactStoring{
@@ -15,10 +62,10 @@ class ContactStoring{
     private String city;
     private String state;
     private int zip;
-    private int phoneNumber;
+    private long phoneNumber;
     private String email;
 
-    public ContactStoring(String firstName, String lastName, String address, String city, String state, int zip, int phoneNumber, String email) {
+    public ContactStoring(String firstName, String lastName, String address, String city, String state, int zip, long phoneNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -53,7 +100,7 @@ class ContactStoring{
         this.zip = zip;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -85,7 +132,7 @@ class ContactStoring{
         return zip;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 
